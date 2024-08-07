@@ -11,7 +11,7 @@ public class printXToPowN {
         }
         return x*pow(x,--n);
     }
-    public static int pow1(int x,int n)
+    public static long pow1(int x,int n)
     {
         if(x==0){
             return 0;
@@ -19,8 +19,9 @@ public class printXToPowN {
         if(n==0){
             return 1;
         }
-        int ans = pow1(x,n/2);
-        int ansForEvenNum = ans*ans;
+
+        long ans = pow1(x,n/2);
+        long ansForEvenNum = ans*ans;
         if(n%2==0){
             return ansForEvenNum;
         }
@@ -30,6 +31,6 @@ public class printXToPowN {
        
     }
     public static void main(String[] args) {
-        System.out.println(pow1(2,15));
+        System.out.println(pow1(2,6));
     }
 }
