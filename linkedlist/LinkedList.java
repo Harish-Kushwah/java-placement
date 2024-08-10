@@ -104,13 +104,86 @@ public class LinkedList {
         System.out.println();
     }
 
+    public void reverseIterative(){
+        if(head==null || head.next ==null){
+            return;
+        }
+        Node prevNode = head;
+        Node currNode = head.next;
+        while (currNode!=null) {
+            Node nextNode = currNode.next;
+            currNode.next = prevNode;
+
+            //update
+            prevNode = currNode;
+            currNode = nextNode;
+        }
+        head.next = null;
+        head = prevNode;
+    }
+    public Node reverseRecursive(Node head){
+        if(head==null || head.next == null){
+            return head;
+        }
+        Node newHead = reverseRecursive(head.next);
+        head.next.next = head;
+        head.next = null;
+        return newHead;
+    }
+    public Node getNthLastNode(int n){
+        int len = getSize()-n;
+        if(len>=0){
+            int i =0;
+            Node temp;
+            for(temp=head;temp!=null && i<len;temp=temp.next,i++);
+            return temp;
+        }
+        else{
+            return null;
+        }
+    }
+    public void removeNthFromLast(int n){
+        int indexFromStart = getSize()-n;
+        delete(indexFromStart);
+    }
+    public boolean isPalindrome(){
+        int n = getSize();
+        Node temp =head;
+        for(int i=1;i<=n/2 && temp!=null;i++){
+            if(!temp.data.equals(getNthLastNode(i).data)){
+                return false;
+            }
+            temp = temp.next;
+        }
+        return true;
+    }
+    public boolean hasCycle(){
+        if(head == null){
+            return false;
+        }
+        Node turtle = head; // slow
+        Node hare = head; //fast
+        while (hare!=null && hare.next!=null) {
+            hare = hare.next.next;
+            turtle = turtle.next;
+            if(hare==turtle){
+                return true;
+            }
+
+        }
+        return false;
+
+
+    }
+
 
     public static void main(String[] args) {
         LinkedList list = new LinkedList();
         list.printList();
 
-        list.addFirst("Harish");
-        list.addFirst("Kushwah");
+        list.addFirst("a");
+        list.addFirst("d");
+        list.addFirst("e");
         list.printList();
 
         list.deleteHead();
@@ -124,5 +197,14 @@ public class LinkedList {
         list.delete(0);
         
         list.printList();
+
+        Node ans = list.getNthLastNode(1);
+        System.out.println(ans.data);
+
+        list.removeNthFromLast(3);
+        list.printList();
+        System.out.println(list.isPalindrome());
+        System.out.println(list.hasCycle());
+
     }
 }
